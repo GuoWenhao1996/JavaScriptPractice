@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>基于JSON级联列表</title>
+	<script type="text/javascript">
+		var str = '{"name":"郭文浩","age":21}';
+		console.log("当前类型：" + typeof(str));
+		str = JSON.parse(str);
+		console.log("当前类型：" + typeof(str));
+		console.log(str.name + "," + str.age);
+		console.log(str['name'] + "," + str['age']);
+		for (var temp in str) {
+			console.log(temp + "," + str[temp]);
+		}
+		str = JSON.stringify(str);
+		console.log("当前类型：" + typeof(str));
+	</script>
+</head>
+
+<body>
+	<select id="province" onchange="setCity()">
+   		<option value="">--选择省--</option>
+   </select>
+	<select id="city" onchange="setTown()">
+    		<option value="">--选择市--</option>
+    </select>
+	<select id="town">
+     		<option value="">--选择区县--</option>
+     </select>
+
+</body>
+
+</html>
