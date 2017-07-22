@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>基于数组级联列表</title>
+	<script type="text/javascript">
+		var arr = new Array('A', 'B', 'C');
+		arr[3] = 'D';
+		arr['A'] = 'AAAAAAAA';
+		arr['B'] = 'BBBBBB';
+		for (var i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+		}
+		for (var temp in arr) {
+			console.log("下标：" + temp + "  值：" + arr[temp]);
+		}
+		for (temp of arr) {
+			console.log("值：" + temp);
+		}
+
+		var province = new Array();
+		var city_sx = new Array();
+		var city_cq = new Array();
+		var town_ty = new Array('万柏林区', '杏花岭区', '小店区', '晋源区', '尖草坪区');
+		var town_dt = new Array('新荣区', '阳高县', '天镇县', '大同县', '左云县');
+		var town_sz = new Array('应县', '山阴县', '代县');
+		var town_yc = new Array('垣曲县', '闻喜县', '盐湖区', '夏县', '临猗县');
+		var town_cq = new Array('渝北区', '江北区', '南岸区', '长寿区', '万州区');
+		province['山西省'] = city_sx;
+		province['重庆市'] = city_cq;
+		city_sx['太原市'] = town_ty;
+		city_sx['大同市'] = town_dt;
+		city_sx['朔州市'] = town_sz;
+		city_sx['运城市'] = town_yc;
+		city_cq['重庆市'] = town_cq;
+
+		window.onload = function() {
+			var proSel = document.getElementById("province");
+			for (var temp in province) {
+				console.log(temp);
+				proSel.add(new Option(temp, temp));
+			}
+		}
+
+		function setCity() {
+			var citySel = document.getElementById("city");
+			citySel.options.length = 1;
+			var townSel = document.getElementById("town");
+			townSel.options.length = 1;
+			var pro = document.getElementById("province").value;
+			if (pro == "") {
+				console.log("省份选择为空");
+				return;
+			}
+			console.log("省份选择了" + pro);
+			for (var temp in province[pro]) {
+				console.log("添加【" + pro + "】的【" + temp + "】");
+				citySel.add(new Option(temp, temp));
+			}
+		}
+
+		function setTown() {
+			var townSel = document.getElementById("town");
+			townSel.options.length = 1;
+			var pro = document.getElementById("province").value;
+			var city = document.getElementById("city").value;
+			if (city == "") {
+				console.log("城市选择为空");
+				return;
+			}
+			console.log("城市选择了" + city);
+			for (var temp in province[pro][city]) {
+				console.log("添加【" + city + "】的【" + temp + "】");
+				townSel.add(new Option(province[pro][city][temp], temp));
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<select id="province" onchange="setCity()">
+   		<option value="">--选择省--</option>
+   </select>
+	<select id="city" onchange="setTown()">
+    		<option value="">--选择市--</option>
+    </select>
+	<select id="town">
+     		<option value="">--选择区县--</option>
+     </select>
+
+</body>
+
+</html>
