@@ -12,10 +12,107 @@
 		console.log(str.name + "," + str.age);
 		console.log(str['name'] + "," + str['age']);
 		for (var temp in str) {
-			console.log(temp + "," + str[temp]);
+			console.log(temp + ":" + str[temp]);
 		}
 		str = JSON.stringify(str);
 		console.log("当前类型：" + typeof(str));
+
+		var proJSON = {
+			"1": "山西省",
+			"2": "重庆市"
+		};
+		var cityJSON = {
+			"1": {
+				"101": "太原市",
+				"102": "大同市",
+				"103": "朔州市",
+				"104": "运城市"
+			},
+			"2": {
+				"201": "重庆市"
+			}
+		};
+		var townJSON = {
+			"101": {
+				"10101": "万柏林区",
+				"10102": "杏花岭区",
+				"10103": "小店区",
+				"10104": "晋源区",
+				"10105": "尖草坪区"
+			},
+			"102": {
+				"10201": "新荣区",
+				"10202": "阳高县",
+				"10203": "天镇县",
+				"10204": "大同县",
+				"10205": "左云县"
+			},
+			"103": {
+				"10301": "应县",
+				"10302": "山阴县",
+				"10303": "代县",
+			},
+			"104": {
+				"10401": "垣曲县",
+				"10402": "闻喜县",
+				"10403": "盐湖区",
+				"10404": "夏县",
+				"10405": "临猗县"
+			},
+			"201": {
+				"20101": "渝北区",
+				"20102": "江北区",
+				"20103": "南岸区",
+				"20104": "长寿区",
+				"20105": "万州区"
+			}
+		};
+
+		window.onload = function() {
+			var proSel = document.getElementById("province");
+			for (var temp in proJSON) {
+				proSel.add(new Option(proJSON[temp], temp))
+			}
+		}
+
+		function setCity() {
+			var city = document.getElementById("city");
+			city.options.length = 1;
+			var town = document.getElementById("town");
+			town.options.length = 1;
+			var pro = document.getElementById("province").value;
+			if (!cityJSON[pro]) {
+				console.log("省份选择为空");
+				return;
+			}
+			// console.log(pro);
+			// console.log("cityJSON:" + cityJSON[pro]);
+			console.log("省份选择了" + proJSON[pro]);
+			var sonJSON = cityJSON[pro];
+			for (var temp in sonJSON) {
+				city.add(new Option(sonJSON[temp], temp));
+				console.log("添加【" + proJSON[pro] + "】的【" + sonJSON[temp] + "】");
+			}
+		}
+
+		function setTown() {
+			var town = document.getElementById("town");
+			town.options.length = 1;
+			var pro = document.getElementById("province").value;
+			var city = document.getElementById("city").value;
+			if (!townJSON[city]) {
+				console.log("城市选择为空");
+				return;
+			}
+			// console.log(city);
+			// console.log("townJSON:" + townJSON[city]);
+			console.log("城市选择了" + cityJSON[pro][city]);
+			var sonJSON = townJSON[city];
+			for (var temp in sonJSON) {
+				town.add(new Option(sonJSON[temp], temp));
+				console.log("添加【" + cityJSON[pro][city] + "】的【" + sonJSON[temp] + "】");
+			}
+		}
 	</script>
 </head>
 
